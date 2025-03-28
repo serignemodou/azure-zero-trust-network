@@ -1,0 +1,18 @@
+config:
+  azure-native:subscriptionID: adb13171-70f4-4398-a85b-765112b87ab4
+  azure-native:tenantID: 3849413e-f965-4489-acd3-548081fbce0b
+  azure-native:servicePrincipal:
+  azure-native:location: FranceCentral
+
+  storageAccount:params:
+    sku: 'Standard_GRS'
+    kind: 'StorageV2'
+
+  vnet:params:
+   vnetAddressPrefixes: "10.10.0.0/16"
+   snAddressPrefixes: "10.10.1.0/24"
+
+  frontDoor:params:
+    sku: "Premium_AzureFrontDoor"
+    afdUriPrefix: /subscriptions/adb13171-70f4-4398-a85b-765112b87ab4/resourcegroups
+    afdUriSuffix: providers/Microsoft.Cdn/profiles

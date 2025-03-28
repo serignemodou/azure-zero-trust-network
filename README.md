@@ -1,1 +1,0 @@
-# azure-zero-trust-network

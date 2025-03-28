@@ -1,0 +1,7 @@
+name: azure-nzt
+runtime: nodejs
+description: deploy azure zero trust network model
+
+config:
+  project:url:
+      value: https://github.com:serignemodou/azure-zero-trust-network
