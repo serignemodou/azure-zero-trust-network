@@ -1,8 +1,9 @@
+import * as pulumi from "@pulumi/pulumi";
 import * as keyvault from "@pulumi/azure-native/keyvault";
 import * as network from "@pulumi/azure-native/network";
 
 import {resourcesGroup, env, projectName, location, tags, tenantID} from "./common";
-import {subnet} from "./network";
+import { subnetPrivate } from "./network";
 
 const regEx = /-/gs
 const kvName = `kv-${projectName}-${env}`
@@ -13,7 +14,7 @@ if (keyVaultName.length > 24) {
     keyVaultName = keyVaultName.substring(0, keyVaultName.length - nbr).substring(0, 24)
 }
 
-export const keyVault = new keyvault.Vault(keyVaultName, {
+export const vault = new keyvault.Vault(keyVaultName, {
     vaultName: keyVaultName,
     resourceGroupName: resourcesGroup.name,
     location: location,
@@ -36,10 +37,12 @@ const peName = `pe-kv-${projectName}-${env}`
 new network.PrivateEndpoint(peName, {
     resourceGroupName: resourcesGroup.name,
     location: location,
-    subnet: subnet.id,
+    subnet: {
+        id: subnetPrivate.id,
+    },
     privateLinkServiceConnections: [{
         name: peName,
-        privateLinkServiceId: keyVault.id
+        privateLinkServiceId: vault.id
     }],
     tags: tags
 })

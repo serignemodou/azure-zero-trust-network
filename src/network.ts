@@ -24,7 +24,7 @@ const virtualNetwork = new network.VirtualNetwork(vnetName, {
 })
 
 const subnetName = `sn-${projectName}-${env}`
-export const subnet = new network.Subnet(subnetName, {
+export const subnetPrivate = new network.Subnet(subnetName, {
     resourceGroupName: resourcesGroup.name,
     subnetName: subnetName,
     virtualNetworkName: virtualNetwork.name,

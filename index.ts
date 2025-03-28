@@ -1,1 +1,3 @@
-import * as pulumi from "@pulumi/pulumi";
+import './src/frontdoor'
+import './src/keyVault'
+import './src/storageAccount'

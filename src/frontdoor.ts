@@ -251,4 +251,4 @@ new cdn.SecurityPolicy(afdWafSecurityPolicyName, {
     }
 })
 
-const afdURL: pulumi.Input<string> = pulumi.interpolate`${fdParams.afdUriPrefix}/${resourcesGroup.name}/${fdParams.afdUriSuffix}/${profile.name}`
+export const afdURL: pulumi.Input<string> = pulumi.interpolate`${fdParams.afdUriPrefix}/${resourcesGroup.name}/${fdParams.afdUriSuffix}/${profile.name}`

@@ -1,11 +1,13 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as storage from "@pulumi/azure-native/storage";
 import * as random from "@pulumi/random";
-import * as keyVault from "@pulumi/azure-native/keyVault";
+import * as kv from "@pulumi/azure-native/keyvault";
 import * as network from "@pulumi/azure-native/network";
 
-import {resourcesGroup, env, projectName, location, tags} from './common';
-import {subnet} from "./network";
+import {resourcesGroup, env, projectName, location, tags} from './common'
+import { vault } from "./keyVault"
+import {subnetPrivate} from "./network"
+
 
 interface StorageAccountParams {
     sku: string,
@@ -61,7 +63,7 @@ new storage.BlobServiceProperties('blobService', {
 })
 
 const saContainerName = `cn-${projectName}-${env}`
-export const blobContainer = new storage.BlobContainer(saContainerName, {
+const blobContainer = new storage.BlobContainer(saContainerName, {
     resourceGroupName: resourcesGroup.name,
     accountName: storageAccount.name,
     containerName: saContainerName,
@@ -87,10 +89,10 @@ const appExtension = '.js' //.htlm for html app
 const sasBlobToken = sasBlobContainerToken.serviceSasToken
 export const blobUri = pulumi.interpolate`/{url_path}-{query-string:8}.${appExtension}?${sasBlobToken}`
 
-const kvSecretName = pulumi.interpolate`auth-token-${env}-${randomSuffix}`
-export const secretToken = new keyVault.Secret('secret', {
+const kvSecretName = `auth-token-${env}`
+export const secretToken = new kv.Secret(kvSecretName, {
     resourceGroupName: resourcesGroup.name,
-    vaultName: 'ss',
+    vaultName: vault.name,
     secretName: kvSecretName,
     properties: {
         value: sasBlobToken,
@@ -106,7 +108,9 @@ const peName = `pe-as-${projectName}-${env}`
 new network.PrivateEndpoint(peName, {
     resourceGroupName: resourcesGroup.name,
     location: location,
-    subnet: subnet.id,
+    subnet: {
+        id: subnetPrivate.id,
+    },
     privateLinkServiceConnections: [{
         name: peName,
         privateLinkServiceId: storageAccount.id
