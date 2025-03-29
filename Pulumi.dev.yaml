@@ -1,7 +1,7 @@
 config:
   azure-native:subscriptionID: adb13171-70f4-4398-a85b-765112b87ab4
   azure-native:tenantID: 3849413e-f965-4489-acd3-548081fbce0b
-  azure-native:servicePrincipal:
+  azure-native:servicePrincipal: azure-cli-2025-03-01-14-07-43
   azure-native:location: FranceCentral
 
   storageAccount:params:
