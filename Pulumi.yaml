@@ -1,6 +1,6 @@
 name: azure-nzt
 runtime: nodejs
-description: deploy azure zero trust network model
+description: Azure zero trust network model
 
 config:
   project:url:
