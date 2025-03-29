@@ -5,5 +5,5 @@ on:
 
 jobs:
     preview:
-        uses: serignemodou/azure-deploy/.github/workflows/pulumi-preview.yml@v1.0.0
+        uses: serignemodou/.github/workflows/pulumi-preview.yml@v1.0.0
         secrets: inherit
